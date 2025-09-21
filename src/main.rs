@@ -1,9 +1,9 @@
 #[allow(unused_variables)]
 fn read_version(transaction_hex: &str) -> u32 {
     let transaction_bytes = hex::decode(transaction_hex).unwrap();
-    let version_bytes = &transaction_bytes[0..4];
-    println!("version bytes: {:?}", version_bytes);
-    1
+    let version_bytes: [u8; 4] = transaction_bytes[0..4].try_into().unwrap();
+    let version = u32::from_le_bytes(version_bytes);
+    version
 }
 
 #[allow(unused_variables)]
